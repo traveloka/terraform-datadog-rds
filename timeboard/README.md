@@ -10,7 +10,7 @@ Usage
 
 ```hcl
 module "timeboard_rds_beical-db-01" {
-  source         = "github.com/traveloka/terraform-datadog-rds.git//timeboard"
+  source         = "github.com/traveloka/terraform-datadog-rds//timeboard"
   product_domain = "${var.product_domain}"
   rds_name       = "${var.rds_name}"
 }
