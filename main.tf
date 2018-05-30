@@ -1,5 +1,9 @@
+locals {
+  monitor_enabled = "${var.enabled && length(var.recipients) > 0 ? 1 : 0}"
+}
+
 resource "datadog_timeboard" "rds" {
-  title       = "${var.product_domain} - ${var.rds_name} - RDS"
+  title       = "${var.product_domain} - ${var.rds_name} - ${var.environment} - RDS"
   description = "A generated timeboard for RDS"
 
   template_variable {
@@ -8,13 +12,19 @@ resource "datadog_timeboard" "rds" {
     prefix  = "name"
   }
 
+  template_variable {
+    default = "${var.environment}"
+    name    = "environment"
+    prefix  = "environment"
+  }
+
   graph {
     title     = "Bin Log Disk Usage"
     viz       = "timeseries"
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.bin_log_disk_usage{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.bin_log_disk_usage{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -25,7 +35,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.burst_balance{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.burst_balance{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -36,7 +46,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.cpuutilization{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.cpuutilization{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -47,7 +57,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.database_connections{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.database_connections{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -58,7 +68,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.disk_queue_depth{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.disk_queue_depth{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -69,7 +79,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.free_storage_space{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.free_storage_space{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -80,7 +90,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.freeable_memory{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.freeable_memory{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -91,7 +101,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.maximum_used_transaction_ids{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.maximum_used_transaction_ids{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -102,7 +112,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.network_receive_throughput{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.network_receive_throughput{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -113,7 +123,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -124,7 +134,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -135,7 +145,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -146,7 +156,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.read_latency{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.read_latency{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -157,7 +167,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.read_throughput{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.read_throughput{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -168,7 +178,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.replica_lag{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.replica_lag{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -179,7 +189,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.replication_slot_disk_usage{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.replication_slot_disk_usage{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -190,7 +200,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.swap_usage{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.swap_usage{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -201,7 +211,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.total_storage_space{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.total_storage_space{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -212,7 +222,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.transaction_logs_disk_usage{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.transaction_logs_disk_usage{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -223,7 +233,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.transaction_logs_generation{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.transaction_logs_generation{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -234,7 +244,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.write_iops{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.write_iops{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -245,7 +255,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.write_latency{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.write_latency{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -256,7 +266,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.write_throughput{$rds_name} by {hostname}"
+      q    = "avg:aws.rds.write_throughput{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
