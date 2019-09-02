@@ -107,28 +107,6 @@ variable "free_storage_percentage_escalation_message" {
   description = "The escalation message when Free Storage Percentage Monitor isn't resolved for given time"
 }
 
-variable "disk_swap_usage_thresholds" {
-  type = "map"
-
-  default = {
-    critical = "No default value"
-  }
-
-  description = "The warning and critical thresholds for Disk Swap Usage Monitoring"
-}
-
-variable "disk_swap_usage_message" {
-  type        = "string"
-  default     = ""
-  description = "The message when Disk Swap Usage Monitor triggered"
-}
-
-variable "disk_swap_usage_escalation_message" {
-  type        = "string"
-  default     = ""
-  description = "The escalation message when Disk Swap Usage Monitor isn't resolved for given time"
-}
-
 variable "db_connection_count_thresholds" {
   type = "map"
 
