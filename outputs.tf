@@ -13,11 +13,6 @@ output "monitor_free_storage_percentage_name" {
   description = "The name of datadog monitor for Free Storage Percentage"
 }
 
-output "monitor_disk_swap_usage_name" {
-  value       = "${module.monitor_disk_swap_usage.name}"
-  description = "The name of datadog monitor for Disk Swap Usage"
-}
-
 output "monitor_db_connection_count_name" {
   value       = "${module.monitor_db_connection_count.name}"
   description = "The name of datadog monitor for DB Connection Count"

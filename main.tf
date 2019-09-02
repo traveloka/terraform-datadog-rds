@@ -320,30 +320,6 @@ module "monitor_free_storage_percentage" {
   notify_audit      = "${var.notify_audit}"
 }
 
-module "monitor_disk_swap_usage" {
-  source  = "github.com/traveloka/terraform-datadog-monitor"
-  enabled = "${local.monitor_enabled}"
-
-  product_domain = "${var.product_domain}"
-  service        = "${var.service}"
-  environment    = "${var.environment}"
-  tags           = "${var.tags}"
-  timeboard_id   = "${join(",", datadog_timeboard.rds.*.id)}"
-
-  name               = "${var.product_domain} - ${var.rds_name} - ${var.environment} - Disk Swap Usage is High"
-  query              = "avg(last_5m):avg:aws.rds.swap_usage{name:${var.rds_name}, environment:${var.environment}} by {hostname} >= ${var.disk_swap_usage_thresholds["critical"]}"
-  thresholds         = "${var.disk_swap_usage_thresholds}"
-  message            = "${var.disk_swap_usage_message}"
-  escalation_message = "${var.disk_swap_usage_escalation_message}"
-
-  recipients         = "${var.recipients}"
-  alert_recipients   = "${var.alert_recipients}"
-  warning_recipients = "${var.warning_recipients}"
-
-  renotify_interval = "${var.renotify_interval}"
-  notify_audit      = "${var.notify_audit}"
-}
-
 module "monitor_db_connection_count" {
   source  = "github.com/traveloka/terraform-datadog-monitor"
   enabled = "${local.monitor_enabled}"

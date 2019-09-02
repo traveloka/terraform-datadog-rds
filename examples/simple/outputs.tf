@@ -10,10 +10,6 @@ output "monitor_free_storage_percentage_name" {
   value = "${module.rds.monitor_free_storage_percentage_name}"
 }
 
-output "monitor_disk_swap_usage_name" {
-  value = "${module.rds.monitor_disk_swap_usage_name}"
-}
-
 output "monitor_db_connection_count_name" {
   value = "${module.rds.monitor_db_connection_count_name}"
 }
