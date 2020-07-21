@@ -123,7 +123,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name, $environment} by {hostname}"
+      q    = "avg:aws.rds.network_transmit_throughput{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
@@ -145,7 +145,7 @@ resource "datadog_timeboard" "rds" {
     autoscale = true
 
     request {
-      q    = "avg:aws.rds.oldest_replication_slot_lag{$rds_name, $environment} by {hostname}"
+      q    = "avg:aws.rds.read_iops{$rds_name, $environment} by {hostname}"
       type = "area"
     }
   }
